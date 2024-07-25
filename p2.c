@@ -1,33 +1,125 @@
+#include<stdlib.h>
 #include<stdio.h>
 int main()
 {
-	int a[100],b[100],n,i,j,m=0,count,pres;
+	int *a,*b,*u,*in=NULL,i,n,m=1,j,l=1,count,pres;
+	printf("Enter n: ");
 	scanf("%d",&n);
-	for(i =0;i<n;i++)
-	{
-		scanf("%d",&a[i]);
-	}
+	a = (int*)malloc(n*sizeof(int));
+	b = (int*)malloc(n*sizeof(int));
+	u = (int*)malloc(sizeof(int));
+	printf("Enter elements in the first set:\n");
 	for(i=0;i<n;i++)
 	{
-		count=1;
-		pres=0;
-		for(j=i;j<n-1;j++)
-		{
-			if(a[i]==a[j+1])
-				count++;
-		}
+		scanf("%d",a+i);
+	}
+	printf("Enter elements in the second set:\n");
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",b+i);
+	}	
+	
+	//Calculating union 
+	*u=*a;
+	for(i=0;i<n;i++)
+	{
+		count=0;
 		for(j=0;j<m;j++)
 		{
-			if(b[j]==a[i])
-				pres++;
+			if(*(u+j)==*(a+i))
+				count++;
 		}
-		if(pres==0)
+		if(count==0)
 		{
-			printf("%d is present %d times in the array\n",a[i],count);
-			b[m]=a[i];
 			m++;
+		    	u = (int*)realloc(u,m*sizeof(int));
+			*(u+m-1)=*(a+i);
+		}
+		count=0;
+		for(j=0;j<m;j++)
+		{
+			if(*(u+j)==*(b+i))
+				count++;
+		}
+		if(count==0)
+		{
+			m++;
+       		    	u = (int*)realloc(u,m*sizeof(int));
+			*(u+m-1)=*(b+i);
 		}
 	}
+	
+	//calculating intersection
+	for(i=0;i<n;i++)
+	{
+		count=0;
+		pres=0;
+		for(j=0;j<n;j++)
+		{
+			if(*(a+i)==*(b+j))
+			{
+				count++;
+				break;
+			}
+		}
+		if(count>0)
+		{
+			for(j=0;j<l-1;j++)
+			{
+				if(*(in+j)==*(a+i))
+				pres++;
+			}
+			if(pres==0)
+			{
+				in = (int*)realloc(in,l*sizeof(int));
+				*(in+l-1)=*(a+i);
+				l++;				
+			}
+		}
+	} 
+
+        free(a);
+	free(b);
+
+	for(i=0;i<m;i++)
+	{
+		for(j=0;j<m-i-1;j++)
+		{
+			if(*(u+j)>*(u+j+1))
+			{
+				int temp = *(u+j);
+				*(u+j)=*(u+j+1);
+				*(u+j+1)=temp;
+			}
+		}
+	}
+
+	for(i=0;i<l-1;i++)
+	{
+		for(j=0;j<l-i-2;j++)
+		{
+			if(*(in+j)>*(in+j+1))
+			{
+				int temp = *(in+j);
+				*(in+j)=*(in+j+1);
+				*(in+j+1)=temp;
+			}
+		}
+	}
+	//printing union and intersection
+	
+	printf("\nUnion: {");
+	for(i=0;i<m;i++)
+		printf("%d,",*(u+i));
+		
+	printf("\b}\n\nIntersection: {");
+	for(i=0;i<l-1;i++)
+		printf("%d,",*(in+i));
+		if(l>1)
+    		printf("\b}\n");
+    	else
+    		printf("}\n");
+	free(u);
+	free(in);
 	return 0;
 }
-			
