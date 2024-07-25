@@ -2,13 +2,12 @@
 #include<stdio.h>
 int main()
 {
-	int *a,*b,*u,*in,i,n,m=1,j,l=1,count,pres;
+	int *a,*b,*u,*in=NULL,i,n,m=1,j,l=1,count,pres;
 	printf("Enter n: ");
 	scanf("%d",&n);
 	a = (int*)malloc(n*sizeof(int));
 	b = (int*)malloc(n*sizeof(int));
 	u = (int*)malloc(sizeof(int));
-	in = (int*)malloc(sizeof(int));
 	printf("Enter elements in the first set:\n");
 	for(i=0;i<n;i++)
 	{
@@ -33,7 +32,7 @@ int main()
 		if(count==0)
 		{
 			m++;
-		    u = (int*)realloc(u,m*sizeof(int));
+		    	u = (int*)realloc(u,m*sizeof(int));
 			*(u+m-1)=*(a+i);
 		}
 		count=0;
@@ -45,7 +44,7 @@ int main()
 		if(count==0)
 		{
 			m++;
-		    u = (int*)realloc(u,m*sizeof(int));
+       		    	u = (int*)realloc(u,m*sizeof(int));
 			*(u+m-1)=*(b+i);
 		}
 	}
@@ -72,14 +71,16 @@ int main()
 			}
 			if(pres==0)
 			{
-				*(in+l-1)==*(a+i);
-				l++;
 				in = (int*)realloc(in,l*sizeof(int));
+				*(in+l-1)=*(a+i);
+				l++;				
 			}
 		}
-	}
-	free(a);
+	} 
+
+        free(a);
 	free(b);
+
 	for(i=0;i<m;i++)
 	{
 		for(j=0;j<m-i-1;j++)
@@ -92,10 +93,10 @@ int main()
 			}
 		}
 	}
-	
-	for(i=0;i<l;i++)
+
+	for(i=0;i<l-1;i++)
 	{
-		for(j=0;j<l-i-1;j++)
+		for(j=0;j<l-i-2;j++)
 		{
 			if(*(in+j)>*(in+j+1))
 			{
@@ -105,10 +106,9 @@ int main()
 			}
 		}
 	}
-	
 	//printing union and intersection
 	
-	printf("Union: {");
+	printf("\nUnion: {");
 	for(i=0;i<m;i++)
 		printf("%d,",*(u+i));
 		
