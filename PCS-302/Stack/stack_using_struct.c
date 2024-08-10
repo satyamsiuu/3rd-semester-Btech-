@@ -2,16 +2,17 @@
 #include<stdlib.h>
 typedef struct stack
 {
-    int max,*p;
+    int max,*p,top;
 }st;
-void push(int*,int*,int);
-void pop(int*,int*);
-void peek(int*,int*);
-void display(int*,int*);
+void push(st*);
+void pop(st*);
+void peek(st*);
+void display(st*);
 int main()
 {
-    int top=-1,choice;
+    int choice;
     st p1;
+    p1.top=-1;
     printf("Enter size of stack: ");
     scanf("%d",&p1.max);
     p1.p = (int*)malloc(p1.max*sizeof(int));
@@ -23,19 +24,19 @@ int main()
         switch(choice)
         {
             case 1: 
-            push(p1.p,&top,p1.max);
+            push(&p1);
             break;
             
             case 2: 
-            pop(p1.p,&top);
+            pop(&p1);
             break;
             
             case 3: 
-            peek(p1.p,&top);
+            peek(&p1);
             break;
         
             case 4:
-            display(p1.p,&top);
+            display(&p1);
             break;
             
             case 5:
@@ -50,45 +51,44 @@ int main()
     while(choice!=5);
     return 0;
 }
-void push(int *p,int *top,int max)
+void push(st *p1)
 {
-    int x;
-    if(*top==max-1)
+    if(p1->top==p1->max-1)
         printf("Stack overflow\n");
     else
     {
-        (*top)++;
+        (p1->top)++;
         printf("Enter element: ");
-        scanf("%d",p + *top);
+        scanf("%d",p1->p+p1->top);
     }
 }
-void pop(int *p,int *top)
+void pop(st *p1)
 {
-    if(*top==-1)
+    if(p1->top==-1)
         printf("Stack underflow\n");
     else
     {
-        printf("Popping an element i.e %d\n",*(p+*top));
-        (*top)--;
+       printf("Popping an element i.e %d\n",*(p1->p+p1->top));
+       p1->top--;
     }
 }
-void peek(int *p,int *top)
+void peek(st *p1)
 {
-    if(*top==-1)
+    if(p1->top==-1)
         printf("Stack underflow\n");
     else
-        printf("Element on the top: %d\n",*(p+*top));
+        printf("Element on the top: %d\n",*(p1->p+p1->top));
 }
-void display(int *p,int *top)
+void display(st *p1)
 {   
     int i;
-    if(*top==-1)
+    if(p1->top==-1)
         printf("Stack underflow\n");
     else
     {
         printf("The elements of the stack are:-\n");
-        for(i=0;i<=*top;i++)
-            printf("%d ",*(p+i));
+        for(i=0;i<=p1->top;i++)
+            printf("%d ",*(p1->p+i));
         printf("\n");
     }
 }
