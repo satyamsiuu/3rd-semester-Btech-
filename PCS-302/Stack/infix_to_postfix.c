@@ -88,7 +88,7 @@ char pop(char stack[],int *top)
 {
 	char temp;
 	if(*top==-1)
-		printf("Underflow nigga\n");
+		printf("Underflow during pop\n");
 	else
 		temp=stack[(*top)--];
 	return temp;
@@ -96,7 +96,7 @@ char pop(char stack[],int *top)
 char seek(char stack[],int *top)
 {
 	if(*top==-1)
-		printf("Underflow\n");
+		printf("Underflow during seek\n");
 	return stack[*top];
 }
 		
