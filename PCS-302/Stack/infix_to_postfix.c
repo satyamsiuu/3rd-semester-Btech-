@@ -33,7 +33,7 @@ int main()
 		}
 		else 
 		{
-			while(precedence(stack[top])>precedence(c))
+			while(precedence(stack[top])>=precedence(c))
 			{
 				temp=pop(stack,&top);
 				postfix[h++]=temp;
