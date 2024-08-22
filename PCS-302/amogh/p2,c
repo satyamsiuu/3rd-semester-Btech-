@@ -1,0 +1,73 @@
+#include<stdio.h>
+#include<math.h>
+#define max 540
+void push(int [],int,int *);
+int pop(int [],int*);
+
+void push(int stack[],int ch,int *top)
+{
+stack[*top]=ch;
+(*top)++;
+}
+
+
+
+int pop(int stack[],int *top)
+{
+int x;
+x=stack[*top];
+(*top)--;
+return x;
+}
+
+
+main()
+{
+int ans=0,stack[max],top=-1,i,j,a,b;
+char pos[max],ch;
+printf("Enter the postfix exp:\n");
+scanf("%s",pos);
+while(pos[i]!='\0')
+{
+ch=pos[i];
+if(ch>='A' && ch<='Z')
+{
+	printf("enter value of %c: ",ch);
+	scanf("%d",&j);
+	push(stack,j,&top);
+}
+else
+{
+	b=pop(stack,&top);
+	a=pop(stack,&top);
+	if(ch=='^')
+	{
+		ans=pow(a,b);
+		push(stack,ans,&top);
+	}
+	else if(ch=='+')
+	{
+		ans=a+b;
+		push(stack,ans,&top);
+	}
+	else if(ch=='*')
+	{
+		ans=a*b;
+		push(stack,ans,&top);
+	}
+	else if(ch=='-')
+	{
+		ans=a-b;
+		push(stack,ans,&top);
+	}
+	else if(ch=='/')
+	{
+		ans=a/b;
+		push(stack,ans,&top);
+	}
+}
+i++;
+}
+ans=stack[top];
+printf("the answer is : %d",ans);
+}
