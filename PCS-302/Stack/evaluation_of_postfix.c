@@ -1,60 +1,58 @@
 #include<stdio.h>
 #include<math.h>
-#include<stdlib.h>
 #define MAX 100
-void push(char[],char,int*);
-char pop(char[],int*);
+void push(int[],int,int*);
+int pop(int[],int*);
 int main()
 {
-	char ptfx[MAX],stack[MAX],c;
-	int top=-1,i=0,a,b;
-	printf("Enter a postfix expression:-\n");
-	fgets(ptfx,MAX,stdin);
-	while(ptfx[i]!='\n'||ptfx[i]!='\0')
+	int stack[MAX],top=-1,i=0,a,b;
+	char pstfx[MAX],ch;
+	puts("Enter postfix expression:-");
+	fgets(pstfx,MAX,stdin);
+	while(pstfx[i]!='\n'&&pstfx[i]!='\0')
 	{
-		c=ptfx[i];
-		if(c>='0'&&c<='9')
-			push(stack,c,&top);
+		ch=pstfx[i++];
+		if((ch>='A'&&ch<='Z')||(ch>='a'&&ch<='z'))
+		{
+			printf("Enter value of '%c':",ch);
+			scanf("%d",&a);
+			push(stack,a,&top);
+		}
 		else
 		{
-			a=pop(stack,&top)-48;
-			b=pop(stack,&top)-48;
-			
-			if(c=='+')
-				push(stack,b+a,&top);
-			else if(c=='-')
-				push(stack,b-a,&top);
-			else if(c=='*')
-				push(stack,b*a,&top);
-			else if(c=='/')
+			a=pop(stack,&top);
+			b=pop(stack,&top);
+			if(ch=='^')
+				push(stack,(int)pow(b,a),&top);
+			else if(ch=='/')
 				push(stack,b/a,&top);
-			else if(c=='%')
+			else if(ch=='*')
+				push(stack,b*a,&top);
+			else if(ch=='%')
 				push(stack,b%a,&top);
-			else if(c=='^')
-				push(stack,pow(b,a),&top);
-			else
-			{
-				printf("Wrong expression");
-				exit(0);
-			}
+			else if(ch=='+')
+				push(stack,b+a,&top);
+			else if(ch=='-')
+				push(stack,b-a,&top);
 		}
 	}
-	printf("The result is: %d\n",stack[top]);
+	printf("The result value is: %d\n",stack[top]);
 	return 0;
 }
-void push(char stack[],char x,int *top)
+void push(int stack[],int x,int *top)
 {
 	if(*top==MAX-1)
-		printf("Overflow\n");
+		puts("Stack overflow");
 	else
 		stack[++(*top)]=x;
 }
-char pop(char stack[],int *top)
+int pop(int stack[],int *top)
 {
-	char temp;
 	if(*top==-1)
-		printf("Underflow during pop\n");
-	else
-		temp=stack[(*top)--];
-	return temp;
+		puts("Underflow");
+	else 
+		return stack[(*top)--];
 }
+		
+	
+	
