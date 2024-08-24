@@ -60,7 +60,7 @@ void dequeue(int stack[],int* f,int* r)
         printf("Stack Underflow\n");
     else
     {
-        printf("%d is popped from the queue\n",stack[(*f)++]);
+        printf("%d is dequeued\n",stack[(*f)++]);
         if(*f>*r)
         *f=-1;
     }
