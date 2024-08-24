@@ -46,10 +46,10 @@ void enqueue(int stack[],int* r)
 {
     int x;
     if(*r==MAX-1)
-        printf("Stack Overflow\n");
+        printf("Queue is full!\n");
     else
     {
-        printf("Enter number: ");
+        printf("Enter number to enqueue: ");
         scanf("%d",&x);
         stack[++(*r)]=x;
     }
@@ -57,10 +57,10 @@ void enqueue(int stack[],int* r)
 void dequeue(int stack[],int* f,int* r)
 {
     if(*f==-1)
-        printf("Stack Underflow\n");
+        printf("Queue is empty!\n");
     else
     {
-        printf("%d is dequeued\n",stack[(*f)++]);
+        printf("%d is dequeued.\n",stack[(*f)++]);
         if(*f>*r)
         *f=-1;
     }
@@ -68,7 +68,7 @@ void dequeue(int stack[],int* f,int* r)
 void peek(int stack[],int* f)
 {
     if(*f==-1)
-        printf("Stack underflow\n");
+        printf("Queue is empty!\n");
     else
         printf("%d is at the front of the queue\n",stack[*f]);
 }
@@ -76,7 +76,7 @@ void display(int stack[],int* f,int *r)
 {
     int i;
     if(*f==-1)
-        printf("Stack underflow\n");
+        printf("Queue is empty!\n");
     else
     {
         printf("The queue elements are:-\n");
