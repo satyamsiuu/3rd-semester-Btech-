@@ -7,7 +7,7 @@ void peek(int[],int*);
 void display(int[],int*,int*);
 int main()
 {
-    int stack[MAX],r=-1,f=-1,choice;
+    int queue[MAX],r=-1,f=-1,choice;
     do
     {
         printf("\nPress the numbers for desired operation:-\n");
@@ -16,20 +16,20 @@ int main()
         printf("\n");
         switch(choice)
         {
-                case 1: enqueue(stack,&r);
+                case 1: enqueue(queue,&r);
                 if(r==0)
                     f=0;
                 break;
 
-                case 2: dequeue(stack,&f,&r);
+                case 2: dequeue(queue,&f,&r);
                 if(f==-1)
                     r=-1;
                 break;
 
-                case 3: peek(stack,&f);
+                case 3: peek(queue,&f);
                 break;
 
-                case 4: display(stack,&f,&r);
+                case 4: display(queue,&f,&r);
                 break;
 
                 case 5: printf("Thank you for using this program!!\n");
@@ -42,7 +42,7 @@ int main()
     while(choice!=5);
     return 0;
 }
-void enqueue(int stack[],int* r)
+void enqueue(int queue[],int* r)
 {
     int x;
     if(*r==MAX-1)
@@ -51,28 +51,28 @@ void enqueue(int stack[],int* r)
     {
         printf("Enter number to enqueue: ");
         scanf("%d",&x);
-        stack[++(*r)]=x;
+        queue[++(*r)]=x;
     }
 }    
-void dequeue(int stack[],int* f,int* r)
+void dequeue(int queue[],int* f,int* r)
 {
     if(*f==-1)
         printf("Queue is empty!\n");
     else
     {
-        printf("%d is dequeued.\n",stack[(*f)++]);
+        printf("%d is dequeued.\n",queue[(*f)++]);
         if(*f>*r)
         *f=-1;
     }
 }
-void peek(int stack[],int* f)
+void peek(int queue[],int* f)
 {
     if(*f==-1)
         printf("Queue is empty!\n");
     else
-        printf("%d is at the front of the queue\n",stack[*f]);
+        printf("%d is at the front of the queue\n",queue[*f]);
 }
-void display(int stack[],int* f,int *r)
+void display(int queue[],int* f,int *r)
 {
     int i;
     if(*f==-1)
@@ -81,7 +81,7 @@ void display(int stack[],int* f,int *r)
     {
         printf("The queue elements are:-\n");
         for(i=*f;i<=*r;i++)
-            printf("%d ",stack[i]);
+            printf("%d ",queue[i]);
         printf("\n");
     }
 }
