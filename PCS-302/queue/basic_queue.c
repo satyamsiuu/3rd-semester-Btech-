@@ -1,8 +1,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 #define MAX 100
-void push(int[],int*);
-void pop(int[],int*,int*);
+void enqueue(int[],int*);
+void dequeue(int[],int*,int*);
 void peek(int[],int*);
 void display(int[],int*,int*);
 int main()
@@ -11,17 +11,17 @@ int main()
     do
     {
         printf("\nPress the numbers for desired operation:-\n");
-        printf("1-Push\n2-Pop\n3-Peek\n4-Display\n5-Exit\n\nEnter your choice: ");
+        printf("1-Enqueue\n2-Dequeue\n3-Peek\n4-Display\n5-Exit\n\nEnter your choice: ");
         scanf("%d",&choice);
         printf("\n");
         switch(choice)
         {
-                case 1: push(stack,&r);
+                case 1: enqueue(stack,&r);
                 if(r==0)
                     f=0;
                 break;
 
-                case 2: pop(stack,&f,&r);
+                case 2: dequeue(stack,&f,&r);
                 if(f==-1)
                     r=-1;
                 break;
@@ -42,7 +42,7 @@ int main()
     while(choice!=5);
     return 0;
 }
-void push(int stack[],int* r)
+void enqueue(int stack[],int* r)
 {
     int x;
     if(*r==MAX-1)
@@ -54,7 +54,7 @@ void push(int stack[],int* r)
         stack[++(*r)]=x;
     }
 }    
-void pop(int stack[],int* f,int* r)
+void dequeue(int stack[],int* f,int* r)
 {
     if(*f==-1)
         printf("Stack Underflow\n");
