@@ -1,3 +1,11 @@
+/*
+Polynomial-1:-
+4x^9 + 3x^7 + 10x^5 + 15x^3 + 17x + 6
+
+Polynomial-2:
+11x^11 + 5x^9 + 6x^7 + 9x^4 + 6x^2 + 7
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct poly
@@ -28,7 +36,8 @@ int main()
 }
 
 void create(poly **po)
-{
+{   
+    poly *copy= NULL;
 	poly *r = *po;
 	int ch = 1;
 	poly *p = NULL;
@@ -39,7 +48,6 @@ void create(poly **po)
 		if (p == NULL)
 		{
 			printf("Memory allocation failed\n");
-			goto label;
 		}
 		else
 		{
@@ -47,13 +55,24 @@ void create(poly **po)
 			scanf("%d", &(p->val));
 			printf("Enter exponent: ");
 			scanf("%d", &(p->exp));
-			if (*po == NULL)
-				*po = p;
-			else
-				(r)->next = p;
-			r = p;
+            copy = *po;
+            while(copy!=NULL && copy->exp!=p->exp)
+            {
+                copy=copy->next;
+            }
+            if(copy!=NULL)
+            {
+                copy->val+=p->val;
+            }
+            else
+            {
+                if (*po == NULL)
+				    *po = p;
+			    else
+				    (r)->next = p;
+			    r = p;
+            }		
 		}
-	label:
 		printf("\nPress 0 to stop and 1 to continue: ");
 		scanf("%d", &ch);
 	}
@@ -94,7 +113,7 @@ poly *add(poly *p1, poly *p2)
 	while (copy1 != NULL)
 	{
 		f = 0;
-		p = p3;
+		p = l;
 		while (copy2 != NULL && copy1 != copy2)
 			copy2 = copy2->next;
 		while (p != NULL)
