@@ -13,11 +13,15 @@ class Car
     void update_price(double np)
     {
         price=np;
-    }
+        cout<<"Price of car Updated to $"<<price<<endl<<endl<<"Current car details:-"<<endl;
+        displayDetails();
+    }   
 
     void mark_as_sold()
     {
         availability=false;
+        cout<<"Car Sold!"<<endl<<endl<<"Current car details:-"<<endl;
+        displayDetails();
     }
 
     void displayDetails() {
@@ -46,7 +50,7 @@ int main() {
     // Mark car as sold
     car2.mark_as_sold();
 
-    // Display updated car details
+    cout<<"All Cars details:-\n\n";
     car1.displayDetails();
     car2.displayDetails();
     car3.displayDetails();
