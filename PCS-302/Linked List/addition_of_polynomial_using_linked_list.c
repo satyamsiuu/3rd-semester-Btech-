@@ -1,3 +1,11 @@
+/*
+Polynomial-1:-
+4x^9 + 3x^7 + 10x^5 + 15x^3 + 17x + 6
+
+Polynomial-2:
+11x^11 + 5x^9 + 6x^7 + 9x^4 + 6x^2 + 7
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 typedef struct poly
@@ -28,7 +36,8 @@ int main()
 }
 
 void create(poly **po)
-{
+{   
+    poly *copy= NULL;
 	poly *r = *po;
 	int ch = 1;
 	poly *p = NULL;
@@ -39,7 +48,6 @@ void create(poly **po)
 		if (p == NULL)
 		{
 			printf("Memory allocation failed\n");
-			goto label;
 		}
 		else
 		{
@@ -47,13 +55,24 @@ void create(poly **po)
 			scanf("%d", &(p->val));
 			printf("Enter exponent: ");
 			scanf("%d", &(p->exp));
-			if (*po == NULL)
-				*po = p;
-			else
-				(r)->next = p;
-			r = p;
+            copy = *po;
+            while(copy!=NULL && copy->exp!=p->exp)
+            {
+                copy=copy->next;
+            }
+            if(copy!=NULL)
+            {
+                copy->val+=p->val;
+            }
+            else
+            {
+                if (*po == NULL)
+				    *po = p;
+			    else
+				    (r)->next = p;
+			    r = p;
+            }		
 		}
-	label:
 		printf("\nPress 0 to stop and 1 to continue: ");
 		scanf("%d", &ch);
 	}
@@ -88,84 +107,45 @@ void display(poly *l)
 
 poly *add(poly *p1, poly *p2)
 {
-	poly *copy1 = p1, *copy2 = p2, *p3 = NULL, *p = NULL, *l = NULL;
+	poly *copy1 = p1, *copy2 = p2, *copy3 = NULL, *p3 = NULL, *p = NULL, *l = NULL;
 
-	// Iterate through both polynomials p1 and p2
-	while (copy1 != NULL && copy2 != NULL)
+	while (copy1!= NULL)
 	{
-		p = (poly *)malloc(sizeof(poly)); // Allocate memory for the new term
-		p->next = NULL;
-
-		// Compare exponents and add corresponding values
-		if (copy1->exp > copy2->exp)
-		{
-			p->exp = copy1->exp;
-			p->val = copy1->val;
-			copy1 = copy1->next; // Move ahead in p1
-		}
-		else if (copy1->exp < copy2->exp)
-		{
-			p->exp = copy2->exp;
-			p->val = copy2->val;
-			copy2 = copy2->next; // Move ahead in p2
-		}
-		else
-		{ // If exponents are equal, add the coefficients
-			p->exp = copy1->exp;
-			p->val = copy1->val + copy2->val; // Correctly adding the values
-			copy1 = copy1->next;			  // Move ahead in both lists
+		copy2 = p2;
+		while (copy2 != NULL && copy2->exp != copy1->exp)
 			copy2 = copy2->next;
-		}
-
-		// Link the newly created node to the result list
-		if (p3 != NULL)
-		{
-			p3->next = p;
-		}
-		else
-		{
-			l = p; // Set the head of the result list
-		}
-		p3 = p; // Move p3 forward
-	}
-
-	// If there are remaining terms in p1, append them to the result
-	while (copy1 != NULL)
-	{
 		p = (poly *)malloc(sizeof(poly));
 		p->exp = copy1->exp;
 		p->val = copy1->val;
 		p->next = NULL;
+		if (copy2 != NULL && copy2->exp == p->exp)
+			p->val += copy2->val;
 		if (p3 != NULL)
-		{
 			p3->next = p;
-		}
 		else
-		{
 			l = p;
-		}
 		p3 = p;
 		copy1 = copy1->next;
 	}
-
-	// If there are remaining terms in p2, append them to the result
+	copy2 = p2;
 	while (copy2 != NULL)
 	{
-		p = (poly *)malloc(sizeof(poly));
-		p->exp = copy2->exp;
-		p->val = copy2->val;
-		p->next = NULL;
-		if (p3 != NULL)
+		copy3 = l;
+		while (copy3 != NULL && copy3->exp != copy2->exp)
+			copy3 = copy3->next;
+		if (copy3 == NULL)
 		{
-			p3->next = p;
+			p = (poly *)malloc(sizeof(poly));
+			p->exp = copy2->exp;
+			p->val = copy2->val;
+			p->next = NULL;
+			if (p3 != NULL)
+				p3->next = p;
+			else
+				l = p;
+			p3 = p;
 		}
-		else
-		{
-			l = p;
-		}
-		p3 = p;
 		copy2 = copy2->next;
 	}
-
 	return l;
 }
