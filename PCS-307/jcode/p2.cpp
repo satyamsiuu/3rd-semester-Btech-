@@ -55,6 +55,10 @@ int main() {
 
     account1.calculateInterest();
     account2.calculateInterest();
+
+    cout<<"All accouunts details:-\n\n";
+    account1.displayDetails();
+    account2.displayDetails();
     
     return 0;
 }
