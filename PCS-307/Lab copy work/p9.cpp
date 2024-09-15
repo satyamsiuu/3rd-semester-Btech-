@@ -29,7 +29,7 @@ int main()
     cout<<"Enter sides of the triangle: ";
     cin>>a>>b>>c;
     cout<<"\nArea of square is: "<<calculate_Area(s)<<endl;
-    cout<<"Area of square is: "<<calculate_Area(l,w)<<endl;
-    cout<<"Area of square is: "<<calculate_Area(a,b,c)<<endl;
+    cout<<"Area of rectangle is: "<<calculate_Area(l,w)<<endl;
+    cout<<"Area of triangle is: "<<calculate_Area(a,b,c)<<endl;
     return 0;
 }
