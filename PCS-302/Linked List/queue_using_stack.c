@@ -101,7 +101,7 @@ void display(st *top)
 
 void display_queue(st *top)
 {
-    int count = 0;
+    static int count = 0;
     if (top == NULL)
     {
         if(count)
