@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 typedef struct linked_list
 {
@@ -51,26 +52,25 @@ ll* create(ll *head)
     int ch = 1;
     ll *p = NULL, *r = head;
 
-    while (head != NULL && r->next != NULL)
-        r = r->next;
-
     while (ch)
     {
         p = (ll*)malloc(sizeof(ll));
         if (p == NULL)
-            printf("Memory not allocated\n");
-        else
         {
-            printf("\nEnter data: ");
-            scanf("%d", &(p->data));
-            p->next = NULL;
-
-            if (head == NULL)
-                head = p;
-            else
-                r->next = p;
-            r = p;
+            printf("Memory not allocated\n");
+            return head;
         }
+        printf("\nEnter data: ");
+        scanf("%d", &(p->data));
+        p->next = NULL;
+
+        if (head == NULL)
+            head = p;
+        else
+            r->next = p;
+
+        r = p;
+
         printf("\nEnter any number to continue or 0 to stop: ");
         scanf("%d", &ch);
     }
@@ -79,39 +79,41 @@ ll* create(ll *head)
 
 ll* delete_second_max(ll* head)
 {
-    int largest = head->data;
-    int slargest = __INT_MIN__;
-    ll* cur = head,prev=NULL,lprev = NULL,slprev = NULL;
     if (head == NULL || head->next == NULL)
     {
         printf("Linked List does not have enough nodes to find the second maximum!\n");
         return head;
     }
 
-    
-    while(cur!=NULL)
+    int largest = head->data;
+    int slargest = INT_MIN;
+    ll* cur = head;
+    ll* prev = NULL, *lprev = NULL, *slprev = NULL;
+
+    while (cur != NULL)
     {
-        if(cur->data>largest)
+        if (cur->data > largest)
         {
-            slprev = lprev;
-            lprev = prev;
             slargest = largest;
+            slprev = lprev;
             largest = cur->data;
+            lprev = prev;
         }
-        if(cur->data>slargest && cur->data<largest)
+        else if (cur->data > slargest && cur->data < largest)
         {
-            slprev = prev;
             slargest = cur->data;
+            slprev = prev;
         }
         prev = cur;
-        cur=cur->next;
+        cur = cur->next;
     }
-    
-    if(largest==slargest)
-        printf("No distinct elements in the array\n");
+
+    if (largest == slargest || slargest==INT_MIN)
+        printf("No distinct elements in the list\n");
     else
     {
-        if(slprev!=NULL)
+        cur = NULL;
+        if (slprev != NULL)
         {
             cur = slprev->next;
             slprev->next = slprev->next->next;
@@ -121,10 +123,11 @@ ll* delete_second_max(ll* head)
             cur = head;
             head = head->next;
         }
-            
-        printf("Deleting second largest node with data- %d\n",cur->data);
+    
+        printf("Deleting second largest node with data: %d\n", cur->data);
         free(cur);
     }
+    
     return head;
 }
 
