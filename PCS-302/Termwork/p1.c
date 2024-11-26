@@ -18,7 +18,8 @@ int main()
     do
     {
         printf("\n\n-------Linked List Menu-------\n");
-        printf("1-Create a linked list\n2-Delete node from Linked List\n3-Reverse the linked list\n");
+        printf("1-Create a linked list\n2-Delete node from Linked List\n");
+        printf("3-Reverse the linked list\n");
         printf("4-Display Linked List\n5-Exit\n\nEnter your choice: ");
         scanf("%d",&ch);
         printf("\n");
